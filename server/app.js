@@ -127,6 +127,17 @@ app.post("/server/movies", (req, res) => {
     });
 });
 
+app.post("/home/comments/:id", (req, res) => {
+    const sql = `
+    INSERT INTO comments (post, movie_id)
+    VALUES (?, ?)
+    `;
+    con.query(sql, [req.body.post, req.params.id], (err, result) => {
+        if (err) throw err;
+        res.send(result);
+    });
+});
+
 // READ (all)
 app.get("/server/movies", (req, res) => {
     const sql = `
@@ -139,19 +150,20 @@ app.get("/server/movies", (req, res) => {
         res.send(result);
     });
 });
-// app.get("/home/movies", (req, res) => {
-//     const sql = `
-//     SELECT m.*, c.title AS catTitle, c.id AS cid
-//     FROM movies AS m
-//     INNER JOIN cats AS c
-//     ON m.cat_id = c.id
-//     ORDER BY m.title
-//     `;
-//     con.query(sql, (err, result) => {
-//         if (err) throw err;
-//         res.send(result);
-//     });
-// });
+
+app.get("/home/movies", (req, res) => {
+    const sql = `
+    SELECT m.*, c.id AS cid, c.post
+    FROM movies AS m
+    INNER JOIN comments AS c
+    ON c.movie_id = m.id
+    ORDER BY m.title
+    `;
+    con.query(sql, (err, result) => {
+        if (err) throw err;
+        res.send(result);
+    });
+});
 
 
 //DELETE

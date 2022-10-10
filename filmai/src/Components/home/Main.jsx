@@ -2,7 +2,6 @@ import Home from "../../Contexts/Home";
 import List from "./List";
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useRef } from "react";
 import { authConfig } from '../../Functions/auth';
 
 function Main() {
@@ -10,22 +9,38 @@ function Main() {
         const [lastUpdate, setLastUpdate] = useState(Date.now());
         const [movies, setMovies] = useState(null);
         const [rateData, setRateData] = useState(null);
-        const filterOn = useRef(false);
-        const filterWhat = useRef(null);
+        const [comment, setComment] = useState(null);
+
+        const reList = data => {
+            const d = new Map();
+            data.forEach(line => {
+                if (d.has(line.title)) {
+                    d.set(line.title, [...d.get(line.title), line]);
+                } else {
+                    d.set(line.title, [line]);
+                }
+            });
+            return [...d];
+        }
 
 
         // READ for list
         useEffect(() => {
             axios.get('http://localhost:3003/home/movies', authConfig())
                 .then(res => {
-                    if (filterOn.current) {
-                        setMovies(res.data.map((d, i) =>
-                         filterWhat.current === d.cat_id ? {...d, show: true, row: i} : {...d, show: false, row: i}));
-                    } else {
-                        setMovies(res.data.map((d, i) => ({...d, show: true, row: i})));
-                    }
+                    setMovies(reList(res.data));
                 })
         }, [lastUpdate]);
+
+        useEffect(() => {
+            if (null === comment) {
+                return;
+            }
+            axios.post('http://localhost:3003/home/comments/' + comment.movie_id, comment, authConfig())
+            .then(res => {
+                setLastUpdate(Date.now());
+            })
+         }, [comment]);
 
 
         useEffect(() => {
@@ -43,8 +58,7 @@ function Main() {
             movies,
             setRateData,
             setMovies,
-            filterOn,
-            filterWhat
+            setComment
         }}>
         <div className="container">
             <div className="row">

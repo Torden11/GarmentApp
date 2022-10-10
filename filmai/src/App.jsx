@@ -77,9 +77,9 @@ function LoginPage({setRoleChange}) {
       })
   }
   return (
-    <div>
-      <div>name: <input type="text" value={user} onChange={e => setUser(e.target.value)}></input></div>
-      <div>password: <input type="password" value={pass} onChange={e => setPass(e.target.value)}></input></div>
+    <div className='container-login'>
+      <div className='login-content'>name: <input type="text" value={user} onChange={e => setUser(e.target.value)}></input></div>
+      <div className='login-content'>password: <input type="password" value={pass} onChange={e => setPass(e.target.value)}></input></div>
       <button onClick={doLogin}>Login</button>
     </div>
   );
@@ -89,7 +89,7 @@ function LogoutPage({setRoleChange}) {
   useEffect(() => {
     logout();
     setRoleChange(Date.now());
-  }, []);
+  }, [setRoleChange]);
   
   return (
     <Navigate to="/login" replace />

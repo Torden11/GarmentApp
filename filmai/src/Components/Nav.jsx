@@ -6,7 +6,7 @@ function Nav({status}) {
         <div className="container">
             <div className="row">
                 <div className="col-12">
-                    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+                    <nav className="navbar navbar-expand-lg navbar-dark">
                         <div className="container-fluid">
                             <span className="navbar-brand">Movies</span>
                             <div className="collapse navbar-collapse">
