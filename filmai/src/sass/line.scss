@@ -33,6 +33,7 @@
     width: 100%;
     &__content {
         display: flex;
+        flex-wrap: wrap;
         &__title {
             font-size: 20px;
             font-weight: bold;
@@ -45,7 +46,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
+            flex-wrap: wrap;
             min-width: 300px;
             h2 {
                 font-size: 30px;

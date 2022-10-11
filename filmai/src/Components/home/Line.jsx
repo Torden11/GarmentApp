@@ -58,7 +58,7 @@ function Line({ movie }) {
 
                 <ul className="list-group">
                     {
-                        movie[1]?.map(c => <li key={c.cid} className="list-group-item"><p>{c.post}</p></li>)
+                        movie[1]?.map(c => c.cid !== null ? <li key={c.cid} className="list-group-item"><p>{c.post}</p></li> : null)
                     }
                 </ul>
 
