@@ -15,6 +15,8 @@ function Nav({status}) {
                                     {status === 3 ? <NavLink to="/movies" className={ ({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Movies</NavLink> : null}
                                     {status === 3 ? <NavLink to="/comments" className={ ({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Comments</NavLink> : null}
                                     {status !== 1 ? <NavLink to="/logout" className="nav-link">Logout</NavLink> : null}
+                                    {status === 1 ? <NavLink to="/register" className="nav-link">Register</NavLink> : null}
+                                    {status === 1 ? <NavLink to="/login" className="nav-link">Login</NavLink> : null}
                                 </div>
                             </div>
                         </div>

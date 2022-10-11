@@ -49,8 +49,9 @@
             flex-wrap: wrap;
             min-width: 300px;
             h2 {
-                font-size: 30px;
+                font-size: 20px;
                 color: cornflowerblue;
+                margin-right: 15px;
             }
         }
         &__cat {
@@ -63,7 +64,7 @@
         &__price {
             color: gray;
             margin-right: 10px;
-            width: 80px;
+            width: 100px;
             padding-top: 10px
         }
     }

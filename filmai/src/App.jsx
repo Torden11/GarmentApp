@@ -4,6 +4,7 @@ import Nav from './Components/Nav';
 import Home from './Components/home/Main';
 import MainComments from './Components/comment/Main';
 import MainMovies from './Components/movies/Main';
+import RegisterPage from './Components/register/Main';
 import { login, logout, authConfig } from './Functions/auth';
 import { useState, useEffect } from "react";
 import axios from 'axios';
@@ -21,6 +22,7 @@ function App() {
         <Route path="/logout" element={<LogoutPage setRoleChange={setRoleChange} />} />
         <Route path="/movies" element={<RequireAuth role="admin"><MainMovies /></RequireAuth>}></Route>
         <Route path="/comments" element={<RequireAuth role="admin"><MainComments /></RequireAuth>}></Route>
+        <Route path="/register" element={<RegisterPage setRoleChange={setRoleChange} />} />
       </Routes>
     </BrowserRouter>
   );

@@ -16,13 +16,13 @@ function Line({ movie }) {
                         </div> : <span className="red-image">No image</span>}
                     </div>
                     <div className="line__content__title">
-                        {movie.title}
+                        <h1>{movie.title}</h1>
                     </div>
                     <div className="line__content__info">
-                        {movie.price}
+                        Price: {movie.price} EUR
                     </div>
                     <div className="line__content__info">
-                        {movie.rating ?? 'no rating'}
+                        Rating: {movie.rating ?? 'no rating'}
                     </div>
                 </div>
                 <div className="line__buttons">

@@ -44,7 +44,7 @@ const doAuth = function(req, res, next) {
                 }
             }
         );
-    } else if (0 === req.url.indexOf('/login-check') || 0 === req.url.indexOf('/login')) {
+    } else if (0 === req.url.indexOf('/login-check') || 0 === req.url.indexOf('/login')|| 0 === req.url.indexOf('/register')) {
         next();
     } else { // fron
         const sql = `
@@ -110,6 +110,17 @@ app.post("/login", (req, res) => {
         } else {
             res.send({ msg: 'ok', key });
         }
+    });
+});
+
+app.post("/register", (req, res) => {
+    const sql = `
+    INSERT INTO users (name, psw)
+    VALUES (?, ?)
+  `;
+    con.query(sql, [req.body.name, md5(req.body.pass)], (err, result) => {
+        if (err) throw err;
+        res.send(result);
     });
 });
 

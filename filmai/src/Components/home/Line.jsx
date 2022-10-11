@@ -31,18 +31,18 @@ function Line({ movie }) {
             <div className="home">
                 <div className="home__content">
                     <div className="home__content__info">
-                    <h2>{movie[0]}</h2>
+                    <h1>{movie[0]}</h1>
                         {movie[1][0].image ? <div className='img-bin'>
                             <img src={movie[1][0].image} alt={movie[0]}>
                             </img>
                         </div> : null}
                     </div>
                     <div className="home__content__price">
-                    {movie[1][0].price} Eur
+                    Price: {movie[1][0].price} Eur
                     </div>
 
                     <div className="home__content__info">
-                        {movie[1][0].rating ?? 'no rating'}
+                    <h2>Movie Rating: {movie[1][0].rating ?? 'no rating'}</h2>
                         <select value={rate} onChange={e => setRate(e.target.value)}>
                             {
                                 [...Array(10)].map((_, i) => <option key={i + 1} value={i + 1}>{i + 1}</option>)
