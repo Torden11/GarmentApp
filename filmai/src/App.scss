@@ -3,6 +3,7 @@
 
 body {
   height: 100vh;
+  overflow: auto;
   background: linear-gradient(to left top, #eccb10, #84c222,);
 }
 
@@ -87,6 +88,8 @@ body {
 
   .red-image {
     border: none;
+    display: flex;
+    text-align: center;
     
   }
 }

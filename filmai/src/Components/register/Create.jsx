@@ -40,7 +40,7 @@ function Create() {
                     <input style={{borderColor: error ? 'crimson' : null}} type="password" className="form-control" value={pass} onChange={e => setPass(e.target.value)} />
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Password 2</label>
+                    <label className="form-label">Repeat password</label>
                     <input style={{borderColor: error ? 'crimson' : null}} type="password" className="form-control" value={pass2} onChange={e => setPass2(e.target.value)} />
                 </div>
                 <button onClick={add} type="button" className="btn btn-outline-success">Register</button>

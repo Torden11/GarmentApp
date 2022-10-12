@@ -8,14 +8,36 @@ import RegisterPage from './Components/register/Main';
 import { login, logout, authConfig } from './Functions/auth';
 import { useState, useEffect } from "react";
 import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';
+import DataContext from './Contexts/DataContext';
+import Messages from './Components/Messages';
 
 function App() {
 
   const [roleChange, setRoleChange] = useState(Date.now());
+  const [msgs, setMsgs] = useState([]);
+
+  const makeMsg = text => {
+
+    const msg = {
+      id: uuidv4(),
+      text
+    }
+    setMsgs(m => [...m, msg]);
+    setTimeout(() => {
+      setMsgs(m => m.filter(mes => mes.id !== msg.id));
+    }, 6000);
+  }
 
   return (
+    <DataContext.Provider value={{
+      msgs,
+      setMsgs,
+      makeMsg
+    }}>
     <BrowserRouter>
       <ShowNav roleChange={roleChange}/>
+      <Messages/>
       <Routes>
         <Route path="/" element={<RequireAuth role="user"><Home /></RequireAuth>}></Route>
         <Route path="/login" element={<LoginPage setRoleChange={setRoleChange} />} />
@@ -25,6 +47,7 @@ function App() {
         <Route path="/register" element={<RegisterPage setRoleChange={setRoleChange} />} />
       </Routes>
     </BrowserRouter>
+    </DataContext.Provider>
   );
 }
 

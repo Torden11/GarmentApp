@@ -14,7 +14,7 @@ function Line({ movie }) {
             <div className="home">
                 <div className="home__content">
                     <div className="home__content__info">
-                    <h2>{movie[0]} <small>({movie[1].length})</small></h2>
+                    <h1>{movie[0]} <small>({movie[1].length})</small></h1>
                         {movie[1][0].image ? <div className='img-bin'>
                             <img src={movie[1][0].image} alt={movie[0]}>
                             </img>
