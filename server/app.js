@@ -134,7 +134,7 @@ app.post("/server/movies", (req, res) => {
     `;
     con.query(sql, [req.body.title, req.body.price, req.body.image], (err, result) => {
         if (err) throw err;
-        res.send(result);
+        res.send({ msg: 'OK', text: 'A new movie has been added.', type: 'success' });
     });
 });
 

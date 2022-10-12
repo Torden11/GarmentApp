@@ -6,7 +6,7 @@ import MainComments from './Components/comment/Main';
 import MainMovies from './Components/movies/Main';
 import RegisterPage from './Components/register/Main';
 import { login, logout, authConfig } from './Functions/auth';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import DataContext from './Contexts/DataContext';
@@ -17,8 +17,7 @@ function App() {
   const [roleChange, setRoleChange] = useState(Date.now());
   const [msgs, setMsgs] = useState([]);
 
-  const makeMsg = text => {
-
+  const makeMsg = useCallback(text => {
     const msg = {
       id: uuidv4(),
       text
@@ -27,7 +26,7 @@ function App() {
     setTimeout(() => {
       setMsgs(m => m.filter(mes => mes.id !== msg.id));
     }, 6000);
-  }
+  }, []);
 
   return (
     <DataContext.Provider value={{

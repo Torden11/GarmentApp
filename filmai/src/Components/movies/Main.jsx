@@ -33,9 +33,9 @@ function Main() {
         axios.post('http://localhost:3003/server/movies', createData, authConfig())
             .then(res => {
                 setLastUpdate(Date.now());
-                makeMsg('Hooray! A new movie has been added.');
+                makeMsg(res.data.text);
             });
-    }, [createData]);
+    }, [createData, makeMsg]);
 
     useEffect(() => {
         if (null === deleteData) {
