@@ -54,6 +54,29 @@ body {
   }
 }
 
+.msg-bin {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+  .toast {
+      display: block;
+      margin: 10px;
+      &.ok {
+          background-color: green;
+          color: white;
+      }
+      &.error {
+          background-color: crimson;
+          color: white;
+      }
+      &.info {
+          background-color: skyblue;
+          color: white;
+      }
+  }
+}
+
 @media (max-width: 990px) {
   .row {
     display: flex;

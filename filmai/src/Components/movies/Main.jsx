@@ -33,7 +33,7 @@ function Main() {
         axios.post('http://localhost:3003/server/movies', createData, authConfig())
             .then(res => {
                 setLastUpdate(Date.now());
-                makeMsg(res.data.text);
+                makeMsg(res.data.text, res.data.type);
             });
     }, [createData, makeMsg]);
 
@@ -44,6 +44,7 @@ function Main() {
         axios.delete('http://localhost:3003/server/movies/' + deleteData.id, authConfig())
             .then(res => {
                 setLastUpdate(Date.now());
+                makeMsg(res.data.text, res.data.type);
             });
     }, [deleteData]);
 

@@ -199,7 +199,7 @@ app.delete("/server/movies/:id", (req, res) => {
     `;
     con.query(sql, [req.params.id], (err, result) => {
         if (err) throw err;
-        res.send(result);
+        res.send({ msg: 'OK', text: 'The movie has been deleted.', type: 'info' });
     });
 });
 
