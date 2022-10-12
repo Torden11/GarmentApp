@@ -1,4 +1,5 @@
 import { useState, useContext, useRef } from 'react';
+import DataContext from '../../Contexts/DataContext';
 import Movies from '../../Contexts/Movies';
 import getBase64 from '../../Functions/getBase64';
 
@@ -9,6 +10,7 @@ function Create() {
     const fileInput = useRef();
 
     const { setCreateData } = useContext(Movies);
+    const {makeMsg} = useContext(DataContext);
 
     const [photoPrint, setPhotoPrint] = useState(null);
 
@@ -21,6 +23,19 @@ function Create() {
     }
 
     const add = () => {
+
+        if (title.length === 0 || title.length > 50) {
+            makeMsg('Invalid title', 'error');
+            return;
+        }
+        if (price.replace(/[^\d.]/, '') !== price) {
+            makeMsg('Invalid price', 'error');
+            return;
+        }
+        if (parseFloat(price) > 99.99) {
+            makeMsg('Max price is 99.99', 'error');
+            return;
+        }
         setCreateData({
             title,
             price: parseFloat(price),

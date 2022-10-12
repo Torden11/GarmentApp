@@ -46,7 +46,7 @@ function Main() {
                 setLastUpdate(Date.now());
                 makeMsg(res.data.text, res.data.type);
             });
-    }, [deleteData]);
+    }, [deleteData, makeMsg]);
 
     useEffect(() => {
         if (null === editData) {
