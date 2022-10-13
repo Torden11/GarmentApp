@@ -106,21 +106,22 @@ app.post("/login", (req, res) => {
     con.query(sql, [key, req.body.user, md5(req.body.pass)], (err, result) => {
         if (err) throw err;
         if (!result.affectedRows) {
-            res.send({ msg: 'error', key: '' });
+            res.status(401).send({ msg: 'error', key: '' });
         } else {
-            res.send({ msg: 'ok', key });
+            res.send({ msg: 'ok', key, text: 'Thanks for coming back! :)', type: 'info' });
         }
     });
 });
 
 app.post("/register", (req, res) => {
+    const key = uuid.v4();
     const sql = `
-    INSERT INTO users (name, psw)
-    VALUES (?, ?)
+    INSERT INTO users (name, psw, session)
+    VALUES (?, ?, ?)
   `;
-    con.query(sql, [req.body.name, md5(req.body.pass)], (err, result) => {
+    con.query(sql, [req.body.name, md5(req.body.pass), key], (err, result) => {
         if (err) throw err;
-        res.send(result);
+        res.send({ msg: 'ok', key, text: 'Welcome to our world!', type: 'info' });
     });
 });
 

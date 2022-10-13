@@ -1,14 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import Register from '../../Contexts/Register';
 import Create from './Create';
 import axios from 'axios';
-import { authConfig } from '../../Functions/auth';
+import { authConfig, login } from '../../Functions/auth';
 import { useNavigate } from 'react-router-dom';
+import DataContext from '../../Contexts/DataContext';
 
-function Main() {
+function Main({setRoleChange}) {
 
    const navigate = useNavigate()
     const [createUser, setCreateUser] = useState(null);
+    const { makeMsg } = useContext(DataContext);
 
     useEffect(() => {
         if (null === createUser) {
@@ -16,9 +18,12 @@ function Main() {
         }
         axios.post('http://localhost:3003/register', createUser, authConfig())
             .then(res => {
-               navigate('/login', { replace: true });
+                setRoleChange(Date.now());
+                login(res.data.key);
+                navigate('/', { replace: true });
+                makeMsg(res.data.text, res.data.type);
             });
-    }, [createUser, navigate]);
+    }, [createUser, navigate, setRoleChange, makeMsg]);
 
 
 
