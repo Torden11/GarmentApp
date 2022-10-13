@@ -1,14 +1,16 @@
 import Comment from "../../Contexts/Comment";
 import List from "./List";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { authConfig } from '../../Functions/auth';
+import DataContext from "../../Contexts/DataContext";
 
 function Main() {
 
     const [lastUpdate, setLastUpdate] = useState(Date.now());
     const [movies, setMovies] = useState(null);
     const [comment, setComment] = useState(null);
+    const { makeMsg } = useContext(DataContext);
 
     const reList = data => {
         const d = new Map();
@@ -37,8 +39,9 @@ function Main() {
         axios.delete('http://localhost:3003/server/comments/' + comment.id, authConfig())
             .then(res => {
                 setLastUpdate(Date.now());
+                makeMsg(res.data.text, res.data.type);
             })
-    }, [comment]);
+    }, [comment, makeMsg]);
 
     return (
         <Comment.Provider value={{

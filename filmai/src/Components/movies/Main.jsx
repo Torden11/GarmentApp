@@ -55,8 +55,9 @@ function Main() {
         axios.put('http://localhost:3003/server/movies/' + editData.id, editData, authConfig())
             .then(res => {
                 setLastUpdate(Date.now());
+                makeMsg(res.data.text, res.data.type);
             });
-    }, [editData]);
+    }, [editData, makeMsg]);
 
 
     return (

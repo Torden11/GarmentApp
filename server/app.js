@@ -108,7 +108,7 @@ app.post("/login", (req, res) => {
         if (!result.affectedRows) {
             res.status(401).send({ msg: 'error', key: '' });
         } else {
-            res.send({ msg: 'ok', key, text: 'Thanks for coming back! :)', type: 'info' });
+            res.send({ msg: 'ok', key, text: 'Thanks for coming back ' + req.body.user + ' ! :)', type: 'info' });
         }
     });
 });
@@ -146,7 +146,7 @@ app.post("/home/comments/:id", (req, res) => {
     `;
     con.query(sql, [req.body.post, req.params.id], (err, result) => {
         if (err) throw err;
-        res.send(result);
+        res.send({ msg: 'OK', text: 'Thanks for the comment.', type: 'info' });
     });
 });
 
@@ -211,7 +211,7 @@ app.delete("/server/comments/:id", (req, res) => {
     `;
     con.query(sql, [req.params.id], (err, result) => {
         if (err) throw err;
-        res.send(result);
+        res.send({ msg: 'OK', text: 'Unappropriate comment has been deleted.', type: 'info' });
     });
 });
 
@@ -228,7 +228,7 @@ app.put("/home/movies/:id", (req, res) => {
     `;
     con.query(sql, [req.body.rate, req.params.id], (err, result) => {
         if (err) throw err;
-        res.send(result);
+        res.send({ msg: 'OK', text: 'Thanks for your vote!', type: 'info' });
     });
 });
 app.put("/server/movies/:id", (req, res) => {
@@ -258,7 +258,7 @@ app.put("/server/movies/:id", (req, res) => {
     }
     con.query(sql, r, (err, result) => {
         if (err) throw err;
-        res.send(result);
+        res.send({ msg: 'OK', text: 'The movie has been edited.', type: 'success' });
     });
 });
 

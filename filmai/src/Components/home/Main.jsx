@@ -3,6 +3,8 @@ import List from "./List";
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { authConfig } from '../../Functions/auth';
+import { useContext } from "react";
+import DataContext from "../../Contexts/DataContext";
 
 function Main() {
 
@@ -10,6 +12,7 @@ function Main() {
         const [movies, setMovies] = useState(null);
         const [rateData, setRateData] = useState(null);
         const [comment, setComment] = useState(null);
+        const { makeMsg } = useContext(DataContext);
 
         const reList = data => {
             const d = new Map();
@@ -39,8 +42,9 @@ function Main() {
             axios.post('http://localhost:3003/home/comments/' + comment.movie_id, comment, authConfig())
             .then(res => {
                 setLastUpdate(Date.now());
+                makeMsg(res.data.text, res.data.type);
             })
-         }, [comment]);
+         }, [comment, makeMsg]);
 
 
         useEffect(() => {
@@ -50,8 +54,9 @@ function Main() {
             axios.put('http://localhost:3003/home/movies/' + rateData.id, rateData, authConfig())
             .then(res => {
                 setLastUpdate(Date.now());
+                makeMsg(res.data.text, res.data.type);
             });
-        }, [rateData]);
+        }, [rateData, makeMsg]);
 
       return (
         <Home.Provider value={{
