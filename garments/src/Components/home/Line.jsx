@@ -3,7 +3,7 @@ import Home from '../../Contexts/Home';
 
 import { useState } from "react";
 
-function Line({ movie }) {
+function Line({ garment }) {
 
     const { setRateData, setComment } = useContext(Home);
 
@@ -12,7 +12,7 @@ function Line({ movie }) {
 
     const doRating = () => {
         setRateData({
-            id: movie[1][0].id,
+            id: garment[1][0].id,
             rate
         });
         setRate(5);
@@ -21,7 +21,7 @@ function Line({ movie }) {
     const add = () => {
         setComment({
             post,
-            movie_id: movie[1][0].id
+            garment_id: garment[1][0].id
         });
         setPost('');
     };
@@ -31,18 +31,18 @@ function Line({ movie }) {
             <div className="home">
                 <div className="home__content">
                     <div className="home__content__info">
-                    <h1>{movie[0]}</h1>
-                        {movie[1][0].image ? <div className='img-bin'>
-                            <img src={movie[1][0].image} alt={movie[0]}>
+                    <h1>{garment[0]}</h1>
+                        {garment[1][0].image ? <div className='img-bin'>
+                            <img src={garment[1][0].image} alt={garment[0]}>
                             </img>
                         </div> : null}
                     </div>
                     <div className="home__content__price">
-                    Price: {movie[1][0].price} Eur
+                    Price: {garment[1][0].price} Eur
                     </div>
 
                     <div className="home__content__info">
-                    <h2>Movie Rating: {movie[1][0].rating ?? 'no rating'}</h2>
+                    <h2>Movie Rating: {garment[1][0].rating ?? 'no rating'}</h2>
                         <select value={rate} onChange={e => setRate(e.target.value)}>
                             {
                                 [...Array(10)].map((_, i) => <option key={i + 1} value={i + 1}>{i + 1}</option>)
@@ -58,7 +58,7 @@ function Line({ movie }) {
 
                 <ul className="list-group">
                     {
-                        movie[1]?.map(c => c.cid !== null ? <li key={c.cid} className="list-group-item"><p>{c.post}</p></li> : null)
+                        garment[1]?.map(c => c.cid !== null ? <li key={c.cid} className="list-group-item"><p>{c.post}</p></li> : null)
                     }
                 </ul>
 
