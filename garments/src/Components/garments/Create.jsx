@@ -1,15 +1,18 @@
 import { useState, useContext, useRef } from 'react';
 import DataContext from '../../Contexts/DataContext';
-import Movies from '../../Contexts/Movies';
+import Garments from '../../Contexts/Garments';
 import getBase64 from '../../Functions/getBase64';
 
 function Create() {
 
-    const [title, setTitle] = useState('');
+    const [type, setType] = useState('');
+    const [color, setColor] = useState('#ffffff');
+    const [size, setSize] = useState('');
     const [price, setPrice] = useState('');
     const fileInput = useRef();
+    
 
-    const { setCreateData } = useContext(Movies);
+    const { setCreateData } = useContext(Garments);
     const {makeMsg} = useContext(DataContext);
 
     const [photoPrint, setPhotoPrint] = useState(null);
@@ -24,8 +27,8 @@ function Create() {
 
     const add = () => {
 
-        if (title.length === 0 || title.length > 50) {
-            makeMsg('Invalid title', 'error');
+        if (type.length === 0 || type.length > 50) {
+            makeMsg('Invalid type', 'error');
             return;
         }
         if (price.replace(/[^\d.]/, '') !== price) {
@@ -37,30 +40,48 @@ function Create() {
             return;
         }
         setCreateData({
-            title,
+            type,
+            color,
+            size,
             price: parseFloat(price),
             image: photoPrint
         });
-        setTitle('');
+        setType('');
+        setSize('');
+        setColor('#ffffff');
         setPrice('');
         setPhotoPrint(null);
         fileInput.current.value = null;
     }
-
+    
     return (
         <div className="card m-4 col-lg-4 col-md-12">
-            <h5 className="card-header">New Movie</h5>
+            <h5 className="card-header">New Garment</h5>
             <div className="card-body">
                 <div className="mb-3">
-                    <label className="form-label">Movie title</label>
-                    <input type="text" className="form-control" value={title} onChange={e => setTitle(e.target.value)} />
+                    <label className="form-label">Garment Type</label>
+                    <input type="text" className="form-control" value={type} onChange={e => setType(e.target.value)} />
+                </div>
+                <div className="mb-1">
+                    <label className="form-label">Garment Color</label>
+                    <input type="color" className="form-control" value={color} onChange={e => setColor(e.target.value)} />
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Movie Price</label>
+                    <label className="form-label">Garment Size</label>
+                    <select className="form-select" value={size} onChange={e => setSize(e.target.value)}>
+                        <option value={0} >Choose from list</option>
+                        {
+                        [ 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL' ].map((dydis, i) => <option key={i} value={dydis}>{dydis}</option>)
+                        }
+                    </select>
+                    
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">Garment Price</label>
                     <input type="text" className="form-control" value={price} onChange={e => setPrice(e.target.value)} />
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Movie Image</label>
+                    <label className="form-label">Garment Image</label>
                     <input ref={fileInput} type="file" className="form-control" onChange={doPhoto} />
                 </div>
                 {photoPrint ? <div className='img-bin'><img src={photoPrint} alt="upload"></img></div> : null}
