@@ -4,7 +4,7 @@ import getBase64 from "../../Functions/getBase64";
 
 function Edit() {
   const [type, setType] = useState("");
-  const [color, setColor] = useState("");
+  const [color, setColor] = useState('#ffffff');
   const [size, setSize] = useState("");
   const [price, setPrice] = useState("");
   const fileInput = useRef();
@@ -39,6 +39,7 @@ function Edit() {
     if (null === modalData) {
       return;
     }
+    console.log(modalData)
     setType(modalData.type);
     setColor(modalData.color);
     setSize(modalData.size);

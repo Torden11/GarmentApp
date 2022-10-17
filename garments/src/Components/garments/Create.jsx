@@ -6,7 +6,7 @@ import getBase64 from '../../Functions/getBase64';
 function Create() {
 
     const [type, setType] = useState('');
-    const [color, setColor] = useState('');
+    const [color, setColor] = useState('#ffffff');
     const [size, setSize] = useState('');
     const [price, setPrice] = useState('');
     const fileInput = useRef();
@@ -48,7 +48,7 @@ function Create() {
         });
         setType('');
         setSize('');
-        setColor('');
+        setColor('#ffffff');
         setPrice('');
         setPhotoPrint(null);
         fileInput.current.value = null;

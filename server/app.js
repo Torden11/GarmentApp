@@ -130,7 +130,7 @@ app.post("/register", (req, res) => {
 //CREATE
 app.post("/server/garments", (req, res) => {
     const sql = `
-    INSERT INTO garments (type, color, size, price, img)
+    INSERT INTO garments (type, color, size, price, image)
     VALUES (?, ?, ?, ?, ?)
     `;
     con.query(sql, [req.body.type, req.body.color, req.body.size, req.body.price, req.body.image], (err, result) => {
@@ -237,14 +237,14 @@ app.put("/server/garments/:id", (req, res) => {
     if (req.body.deletePhoto) {
         sql = `
         UPDATE garments
-        SET type = ?, color = ?, size = ? price = ?, img = null
+        SET type = ?, color = ?, size = ? price = ?, image = null
         WHERE id = ?
         `;
-        r = [req.body.type, req.body.color, req.body.size,  req.body.price, req.params.id];
+        r = [req.body.type, req.body.color, req.body.size, req.body.price, req.params.id];
     } else if (req.body.image) {
         sql = `
         UPDATE garments
-        SET type = ?, color = ?, size = ?, price = ?, img = ?
+        SET type = ?, color = ?, size = ?, price = ?, image = ?
         WHERE id = ?
         `;
         r = [req.body.type, req.body.color, req.body.size, req.body.price, req.body.image, req.params.id];

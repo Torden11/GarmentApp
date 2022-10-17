@@ -4,21 +4,21 @@ import Garments from '../../Contexts/Garments';
 function Line({ garment }) {
 
     const { setDeleteData, setModalData } = useContext(Garments);
-console.log(garment.img)
+
     return (
         <li className="list-group-item">
             <div className="line">
                 <div className="line__content">
                     <div className="line__content__info">
-                        {garment.img ? <div className='img-bin'>
-                            <img src={garment.img} alt={garment.type}>
+                        {garment.image ? <div className='img-bin'>
+                            <img src={garment.image} alt={garment.type}>
                             </img>
                         </div> : <span className="red-image">No image</span>}
                     </div>
                     <div className="line__content__title">
                         <h1>{garment.type}</h1>
                     </div>
-                    <div className="line__content__info" style={{color: garment.color, border: '2px solid' }}>
+                    <div className="line__content__info" style={{color: garment.color}}>
                         Color: {garment.color}
                     </div>
                     <div className="line__content__info">
