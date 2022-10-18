@@ -19,7 +19,7 @@ const con = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "",
-    database: "ruoniu_filmai_3",
+    database: "apparel_store",
 });
 
 ////////////////////LOGIN/////////////////
@@ -128,14 +128,14 @@ app.post("/register", (req, res) => {
 ///////////////////END////////////////////
 
 //CREATE
-app.post("/server/movies", (req, res) => {
+app.post("/server/garments", (req, res) => {
     const sql = `
-    INSERT INTO movies (title, price, image)
-    VALUES (?, ?, ?)
+    INSERT INTO garments (type, color, size, price, image)
+    VALUES (?, ?, ?, ?, ?)
     `;
-    con.query(sql, [req.body.title, req.body.price, req.body.image], (err, result) => {
+    con.query(sql, [req.body.type, req.body.color, req.body.size, req.body.price, req.body.image], (err, result) => {
         if (err) throw err;
-        res.send({ msg: 'OK', text: 'A new movie has been added.', type: 'success' });
+        res.send({ msg: 'OK', text: 'A new item has been added.', type: 'success' });
     });
 });
 
@@ -151,10 +151,10 @@ app.post("/home/comments/:id", (req, res) => {
 });
 
 // READ (all)
-app.get("/server/movies", (req, res) => {
+app.get("/server/garments", (req, res) => {
     const sql = `
     SELECT *
-    FROM movies
+    FROM garments
     ORDER BY id DESC
     `;
     con.query(sql, (err, result) => {
@@ -163,10 +163,10 @@ app.get("/server/movies", (req, res) => {
     });
 });
 
-app.get("/home/movies", (req, res) => {
+app.get("/home/garments", (req, res) => {
     const sql = `
     SELECT m.*, c.id AS cid, c.post
-    FROM movies AS m
+    FROM garments AS m
     LEFT JOIN comments AS c
     ON c.movie_id = m.id
     ORDER BY m.title
@@ -177,10 +177,10 @@ app.get("/home/movies", (req, res) => {
     });
 });
 
-app.get("/server/movies/nocomments", (req, res) => {
+app.get("/server/garments/nocomments", (req, res) => {
     const sql = `
     SELECT m.*, c.id AS cid, c.post
-    FROM movies AS m
+    FROM garments AS m
     INNER JOIN comments AS c
     ON c.movie_id = m.id
     ORDER BY m.title
@@ -193,14 +193,14 @@ app.get("/server/movies/nocomments", (req, res) => {
 
 
 //DELETE
-app.delete("/server/movies/:id", (req, res) => {
+app.delete("/server/garments/:id", (req, res) => {
     const sql = `
-    DELETE FROM movies
+    DELETE FROM garments
     WHERE id = ?
     `;
     con.query(sql, [req.params.id], (err, result) => {
         if (err) throw err;
-        res.send({ msg: 'OK', text: 'The movie has been deleted.', type: 'info' });
+        res.send({ msg: 'OK', text: 'The item has been deleted.', type: 'info' });
     });
 });
 
@@ -217,9 +217,9 @@ app.delete("/server/comments/:id", (req, res) => {
 
 
 //EDIT
-app.put("/home/movies/:id", (req, res) => {
+app.put("/home/garments/:id", (req, res) => {
     const sql = `
-    UPDATE movies
+    UPDATE garments
     SET 
     rating_sum = rating_sum + ?, 
     rating_count = rating_count + 1, 
@@ -231,39 +231,39 @@ app.put("/home/movies/:id", (req, res) => {
         res.send({ msg: 'OK', text: 'Thanks for your vote!', type: 'info' });
     });
 });
-app.put("/server/movies/:id", (req, res) => {
+app.put("/server/garments/:id", (req, res) => {
     let sql;
     let r;
     if (req.body.deletePhoto) {
         sql = `
-        UPDATE movies
-        SET title = ?, price = ?, image = null
+        UPDATE garments
+        SET type = ?, color = ?, size = ? price = ?, image = null
         WHERE id = ?
         `;
-        r = [req.body.title, req.body.price, req.params.id];
+        r = [req.body.type, req.body.color, req.body.size, req.body.price, req.params.id];
     } else if (req.body.image) {
         sql = `
-        UPDATE movies
-        SET title = ?, price = ?, image = ?
+        UPDATE garments
+        SET type = ?, color = ?, size = ?, price = ?, image = ?
         WHERE id = ?
         `;
-        r = [req.body.title, req.body.price, req.body.image, req.params.id];
+        r = [req.body.type, req.body.color, req.body.size, req.body.price, req.body.image, req.params.id];
     } else {
         sql = `
-        UPDATE movies
-        SET title = ?, price = ?
+        UPDATE garments
+        SET type = ?, color = ?, size = ?, price = ?
         WHERE id = ?
         `;
-        r = [req.body.title, req.body.price, req.params.id]
+        r = [req.body.type, req.body.color, req.body.size, req.body.price, req.params.id]
     }
     con.query(sql, r, (err, result) => {
         if (err) throw err;
-        res.send({ msg: 'OK', text: 'The movie has been edited.', type: 'success' });
+        res.send({ msg: 'OK', text: 'The item has been edited.', type: 'success' });
     });
 });
 
 app.listen(port, () => {
-    console.log(`Filmus rodo per ${port} portą!`)
+    console.log(`Rubai yra renkami per ${port} portą!`)
 });
 
 
