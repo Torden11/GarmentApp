@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import Nav from "./Components/Nav"
 import Home from "./Components/home/Main";
-import MainComments from "./Components/comment/Main";
+import MainOrders from "./Components/orders/Main";
 import Main from "./Components/garments/Main";
 import RegisterPage from "./Components/register/Main";
 import { login, logout, authConfig } from "./Functions/auth";
@@ -88,8 +88,8 @@ function App() {
           <Route
             path="/orders"
             element={
-              <RequireAuth role="admin">
-                <MainComments />
+              <RequireAuth role="user">
+                <MainOrders />
               </RequireAuth>
             }
           ></Route>

@@ -175,13 +175,13 @@ app.get("/home/garments", (req, res) => {
     });
 });
 
-app.get("/server/garments/nocomments", (req, res) => {
+app.get("/server/garments/noorders", (req, res) => {
     const sql = `
-    SELECT m.*, c.id AS cid, c.post
-    FROM garments AS m
-    INNER JOIN comments AS c
-    ON c.movie_id = m.id
-    ORDER BY m.title
+    SELECT g.*, g.id AS cid,
+    FROM garments AS g
+    INNER JOIN orders AS o
+    ON o.garment_id = g.id
+    ORDER BY g.type
     `;
     con.query(sql, (err, result) => {
         if (err) throw err;

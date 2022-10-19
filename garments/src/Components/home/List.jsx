@@ -8,8 +8,8 @@ const sortData = [
     { v: 'default', t: 'Default' },
     { v: 'price_asc', t: 'Price 1-9' },
     { v: 'price_desc', t: 'Price 9-1' },
-    { v: 'rate_asc', t: 'Type A-Z' },
-    { v: 'rate_desc', t: 'Type Z-A' }
+    { v: 'type_asc', t: 'Type A-Z' },
+    { v: 'type_desc', t: 'Type Z-A' }
 ];
 
 function List() {
@@ -36,10 +36,10 @@ function List() {
             case 'price_desc':
                 setGarments(m => [...m].sort((b, a) => a.price - b.price));
                 break;
-            case 'rate_asc':
+            case 'type_asc':
                 setGarments(m => [...m].sort((x, c) => x.type.localeCompare(c.type)));
                 break;
-            case 'rate_desc':
+            case 'type_desc':
                 setGarments(m => [...m].sort((jo, no) => no.type.localeCompare(jo.type)));
                 break;
             default:

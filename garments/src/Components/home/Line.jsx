@@ -1,48 +1,48 @@
-// import { useContext } from 'react';
-// import Home from '../../Contexts/Home';
+import { useContext } from 'react';
+import Home from '../../Contexts/Home';
 
 // import { useState } from "react";
 
 function Line({ garment }) {
-    
+  const { setOrder } = useContext(Home);
 
-    // const { setRateData, setComment } = useContext(Home);
+  // const [rate, setRate] = useState(5);
+  // const [post, setPost] = useState('');
 
-    // const [rate, setRate] = useState(5);
-    // const [post, setPost] = useState('');
+  // const doRating = () => {
+  //     setRateData({
+  //         id: garment[1][0].id,
+  //         rate
+  //     });
+  //     setRate(5);
+  // }
 
-    // const doRating = () => {
-    //     setRateData({
-    //         id: garment[1][0].id,
-    //         rate
-    //     });
-    //     setRate(5);
-    // }
+  const add = () => {
+      setOrder({
+          garment_id: garment.id
+      });
+      };
 
-    // const add = () => {
-    //     setComment({
-    //         post,
-    //         garment_id: garment[1][0].id
-    //     });
-    //     setPost('');
-    // };
+  return (
+    <li className="list-group-item">
+      <div className="home">
+        <div className="home__content">
+          <div className="home__content__info">
+            <h1>{garment.type}</h1>
+            {garment.image ? (
+              <div className="img-bin">
+                <img src={garment.image} alt={garment.image}></img>
+              </div>
+            ) : null}
+          </div>
 
-    return (
-        <li className="list-group-item">
-            <div className="home">
-                <div className="home__content">
-                    <div className="home__content__info">
-                    <h1>{garment.type}</h1>
-                        {garment.image ? <div className='img-bin'>
-                            <img src={garment.image} alt={garment.image}>
-                            </img>
-                        </div> : null}
-                    </div>
-                    <div className="home__content__price">
-                    Price: {garment.price} Eur
-                    </div>
-
-                    {/* <div className="home__content__info">
+          <div className="home__content__info" style={{ color: garment.color }}>
+            Color: {garment.color}
+          </div>
+          <div className="home__content__info">Size: {garment.size}</div>
+          <div className="home__content__price">Price: {garment.price} Eur</div>
+          
+          {/* <div className="home__content__info">
                     <h2>Movie Rating: {garment[1][0].rating ?? 'no rating'}</h2>
                         <select value={rate} onChange={e => setRate(e.target.value)}>
                             {
@@ -50,12 +50,13 @@ function Line({ garment }) {
                             }
                         </select>
                     </div> */}
-                    {/* <div className="home__buttons">
+          {/* <div className="home__buttons">
                         <button onClick={doRating} type="button" className="btn btn-outline-success">Rate</button>
                     </div> */}
-                </div>
-            </div>
-            {/* <div className="comments">
+        </div>
+        <button onClick={add}  type="button" className="btn btn-outline-success">Buy</button>
+      </div>
+      {/* <div className="comments">
 
                 <ul className="list-group">
                     {
@@ -69,8 +70,8 @@ function Line({ garment }) {
                 </div>
                 <button onClick={add} type="button" className="btn btn-outline-success">Add</button>
             </div> */}
-        </li>
-    )
+    </li>
+  );
 }
 
 export default Line;

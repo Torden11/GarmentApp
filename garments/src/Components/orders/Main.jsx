@@ -1,4 +1,4 @@
-import Comment from "../../Contexts/Comment";
+import Order from "../../Contexts/Order";
 import List from "./List";
 import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
@@ -8,8 +8,8 @@ import DataContext from "../../Contexts/DataContext";
 function Main() {
 
     const [lastUpdate, setLastUpdate] = useState(Date.now());
-    const [movies, setMovies] = useState(null);
-    const [comment, setComment] = useState(null);
+    const [garments, setGarments] = useState(null);
+    const [order, setOrder] = useState(null);
     const { makeMsg } = useContext(DataContext);
 
     const reList = data => {
@@ -26,27 +26,27 @@ function Main() {
 
     // READ for list
     useEffect(() => {
-        axios.get('http://localhost:3003/server/movies/nocomments', authConfig())
+        axios.get('http://localhost:3003/server/garments/noorders', authConfig())
             .then(res => {
-                setMovies(reList(res.data));
+                setGarments(reList(res.data));
             })
     }, [lastUpdate]);
 
     useEffect(() => {
-        if (null === comment) {
+        if (null === order) {
             return;
         }
-        axios.delete('http://localhost:3003/server/comments/' + comment.id, authConfig())
+        axios.delete('http://localhost:3003/server/orders/' + order.id, authConfig())
             .then(res => {
                 setLastUpdate(Date.now());
                 makeMsg(res.data.text, res.data.type);
             })
-    }, [comment, makeMsg]);
+    }, [order, makeMsg]);
 
     return (
-        <Comment.Provider value={{
-            setComment,
-            movies
+        <Order.Provider value={{
+            setOrder,
+            garments
         }}>
             <div className="container">
                 <div className="row">
@@ -55,7 +55,7 @@ function Main() {
                     </div>
                 </div>
             </div>
-        </Comment.Provider>
+        </Order.Provider>
     );
 }
 
