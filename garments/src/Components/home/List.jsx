@@ -8,45 +8,45 @@ const sortData = [
     { v: 'default', t: 'Default' },
     { v: 'price_asc', t: 'Price 1-9' },
     { v: 'price_desc', t: 'Price 9-1' },
-    { v: 'rate_asc', t: 'Rating 1-9' },
-    { v: 'rate_desc', t: 'Rating 9-1' }
+    { v: 'rate_asc', t: 'Type A-Z' },
+    { v: 'rate_desc', t: 'Type Z-A' }
 ];
 
 function List() {
 
-    const { movies, setMovies } = useContext(Home);
+    const { garments, setGarments } = useContext(Home);
 
     const [sortBy, setSortBy] = useState('default');
-    const [stats, setStats] = useState({movieCount: null});
+    const [stats, setStats] = useState({garmentCount: null});
 
     
 
     useEffect(() => {
-        if (null === movies) {
+        if (null === garments) {
             return;
         }
-        setStats(s => ({...s, movieCount: movies.length}));
-    }, [movies]);
+        setStats(s => ({...s, garmentCount: garments.length}));
+    }, [garments]);
 
     useEffect(() => {
         switch (sortBy) {
             case 'price_asc':
-                setMovies(m => [...m].sort((a, b) => a[1][0].price - b[1][0].price));
+                setGarments(m => [...m].sort((a, b) => a.price - b.price));
                 break;
             case 'price_desc':
-                setMovies(m => [...m].sort((b, a) => a[1][0].price - b[1][0].price));
+                setGarments(m => [...m].sort((b, a) => a.price - b.price));
                 break;
             case 'rate_asc':
-                setMovies(m => [...m].sort((x, c) => x[1][0].rating - c[1][0].rating));
+                setGarments(m => [...m].sort((x, c) => x.type.localeCompare(c.type)));
                 break;
             case 'rate_desc':
-                setMovies(m => [...m].sort((jo, no) => no[1][0].rating - jo[1][0].rating));
+                setGarments(m => [...m].sort((jo, no) => no.type.localeCompare(jo.type)));
                 break;
             default:
-                setMovies(m => [...m ?? []].sort((a, b) => a.row - b.row));
+                setGarments(m => [...m ?? []].sort((a, b) => a.row - b.row));
         }
 
-    }, [sortBy, setMovies]);
+    }, [sortBy, setGarments]);
 
     return (
         <>
@@ -64,11 +64,11 @@ function List() {
                 </div>
             </div>
             <div className="card m-4">
-                <h5 className="card-header">Movies List ({stats.movieCount})</h5>
+                <h5 className="card-header">Garments List ({stats.garmentCount})</h5>
                 <div className="card-body">
                     <ul className="list-group">
                         {
-                            movies?.map(m => <Line key={m[1][0].id} movie={m} />)
+                            garments?.map(g => <Line key={g.id} garment={g} />)
                         }
                     </ul>
                 </div>

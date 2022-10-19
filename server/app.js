@@ -139,16 +139,16 @@ app.post("/server/garments", (req, res) => {
     });
 });
 
-app.post("/home/comments/:id", (req, res) => {
-    const sql = `
-    INSERT INTO comments (post, movie_id)
-    VALUES (?, ?)
-    `;
-    con.query(sql, [req.body.post, req.params.id], (err, result) => {
-        if (err) throw err;
-        res.send({ msg: 'OK', text: 'Thanks for the comment.', type: 'info' });
-    });
-});
+// app.post("/home/comments/:id", (req, res) => {
+//     const sql = `
+//     INSERT INTO comments (post, movie_id)
+//     VALUES (?, ?)
+//     `;
+//     con.query(sql, [req.body.post, req.params.id], (err, result) => {
+//         if (err) throw err;
+//         res.send({ msg: 'OK', text: 'Thanks for the comment.', type: 'info' });
+//     });
+// });
 
 // READ (all)
 app.get("/server/garments", (req, res) => {
@@ -165,11 +165,9 @@ app.get("/server/garments", (req, res) => {
 
 app.get("/home/garments", (req, res) => {
     const sql = `
-    SELECT m.*, c.id AS cid, c.post
-    FROM garments AS m
-    LEFT JOIN comments AS c
-    ON c.movie_id = m.id
-    ORDER BY m.title
+    SELECT *
+    FROM garments
+    ORDER BY type
     `;
     con.query(sql, (err, result) => {
         if (err) throw err;
@@ -237,7 +235,7 @@ app.put("/server/garments/:id", (req, res) => {
     if (req.body.deletePhoto) {
         sql = `
         UPDATE garments
-        SET type = ?, color = ?, size = ? price = ?, image = null
+        SET type = ?, color = ?, size = ?, price = ?, image = null
         WHERE id = ?
         `;
         r = [req.body.type, req.body.color, req.body.size, req.body.price, req.params.id];
