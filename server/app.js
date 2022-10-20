@@ -83,13 +83,16 @@ app.get("/login-check", (req, res) => {
         if (!result.length) {
             res.send({ msg: 'error', status: 1 }); // user not logged
         } else {
+            console.log(req.query.role)
             if ('admin' === req.query.role) {
+               
                 if (result[0].role !== 10) {
                     res.send({ msg: 'error', status: 2 }); // not an admin
                 } else {
                     res.send({ msg: 'ok', status: 3 }); // is admin
                 }
             } else {
+                console.log('useris')
                 res.send({ msg: 'ok', status: 4 }); // is user
             }
         }
@@ -139,16 +142,16 @@ app.post("/server/garments", (req, res) => {
     });
 });
 
-// app.post("/home/comments/:id", (req, res) => {
-//     const sql = `
-//     INSERT INTO comments (post, movie_id)
-//     VALUES (?, ?)
-//     `;
-//     con.query(sql, [req.body.post, req.params.id], (err, result) => {
-//         if (err) throw err;
-//         res.send({ msg: 'OK', text: 'Thanks for the comment.', type: 'info' });
-//     });
-// });
+app.post("/admin/orders/:id", (req, res) => {
+    const sql = `
+    INSERT INTO orders (post, movie_id)
+    VALUES (?, ?)
+    `;
+    con.query(sql, [req.body.post, req.params.id], (err, result) => {
+        if (err) throw err;
+        res.send({ msg: 'OK', text: 'Thanks for the comment.', type: 'info' });
+    });
+});
 
 // READ (all)
 app.get("/server/garments", (req, res) => {
@@ -175,19 +178,19 @@ app.get("/home/garments", (req, res) => {
     });
 });
 
-app.get("/server/garments/noorders", (req, res) => {
-    const sql = `
-    SELECT g.*, g.id AS cid,
-    FROM garments AS g
-    INNER JOIN orders AS o
-    ON o.garment_id = g.id
-    ORDER BY g.type
-    `;
-    con.query(sql, (err, result) => {
-        if (err) throw err;
-        res.send(result);
-    });
-});
+// app.get("/server/garments/noorders", (req, res) => {
+//     const sql = `
+//     SELECT g.*, g.id AS cid,
+//     FROM garments AS g
+//     INNER JOIN orders AS o
+//     ON o.garment_id = g.id
+//     ORDER BY g.type
+//     `;
+//     con.query(sql, (err, result) => {
+//         if (err) throw err;
+//         res.send(result);
+//     });
+// });
 
 
 //DELETE
