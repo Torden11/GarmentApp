@@ -142,14 +142,14 @@ app.post("/server/garments", (req, res) => {
     });
 });
 
-app.post("/admin/orders/:id", (req, res) => {
+app.post("/server/orders/:id", (req, res) => {
     const sql = `
-    INSERT INTO orders (post, movie_id)
-    VALUES (?, ?)
+    INSERT INTO orders (garment_id)
+    VALUES (?)
     `;
-    con.query(sql, [req.body.post, req.params.id], (err, result) => {
+    con.query(sql, [req.params.id], (err, result) => {
         if (err) throw err;
-        res.send({ msg: 'OK', text: 'Thanks for the comment.', type: 'info' });
+        res.send({ msg: 'OK', text: 'Thanks for the order. It will be confirmed soon', type: 'info' });
     });
 });
 

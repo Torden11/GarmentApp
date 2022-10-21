@@ -10,7 +10,7 @@ function Main() {
 
         // const [lastUpdate, setLastUpdate] = useState(Date.now());
         const [garments, setGarments] = useState(null);
-        // const [rateData, setRateData] = useState(null);
+        const [order, setOrder] = useState(null);
         // const [comment, setComment] = useState(null);
         const { makeMsg } = useContext(DataContext);
 
@@ -35,16 +35,15 @@ function Main() {
                     })
         }, [makeMsg]);
 
-        // useEffect(() => {
-        //     if (null === comment) {
-        //         return;
-        //     }
-        //     axios.post('http://localhost:3003/home/comments/' + comment.movie_id, comment, authConfig())
-        //     .then(res => {
-        //         setLastUpdate(Date.now());
-        //         makeMsg(res.data.text, res.data.type);
-        //     })
-        //  }, [comment, makeMsg]);
+        useEffect(() => {
+            if (null === order) {
+                return;
+            }console.log(order)
+            axios.post('http://localhost:3003/server/orders' + order.garment_id, order, authConfig())
+               .then(res => {
+                makeMsg(res.data.text, res.data.type);
+            })
+         }, [order, makeMsg]);
 
 
         // useEffect(() => {
@@ -63,6 +62,7 @@ function Main() {
             garments,
             // setRateData,
             setGarments,
+            setOrder
             // setComment
         }}>
         <div className="container">
