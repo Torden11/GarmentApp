@@ -13,7 +13,7 @@ import RegisterPage from "./Components/register/Main";
 import LoginPage from "./Components/login/LoginPage";
 import LogoutPage from "./Components/login/LogoutPage";
 import { authConfig } from "./Functions/auth";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useContext } from "react";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import DataContext from "./Contexts/DataContext";
@@ -21,7 +21,10 @@ import Messages from "./Components/Messages";
 
 function App() {
   const [roleChange, setRoleChange] = useState(Date.now());
+
   const [msgs, setMsgs] = useState([]);
+  const [userId, setUserId] = useState(null)
+  
 
   const makeMsg = useCallback((text, type = "") => {
     let msgTypeClass;
@@ -56,6 +59,8 @@ function App() {
         msgs,
         setMsgs,
         makeMsg,
+        setUserId, 
+        userId
       }}
     >
       <BrowserRouter>
@@ -89,6 +94,14 @@ function App() {
           <Route
             path="/orders"
             element={
+              <RequireAuth role="admin">
+                <MainOrders />
+              </RequireAuth>
+            }
+          ></Route>
+          <Route
+            path="/cart"
+            element={
               <RequireAuth role="user">
                 <MainOrders />
               </RequireAuth>
@@ -119,12 +132,14 @@ function ShowNav({ roleChange }) {
 
 function RequireAuth({ children, role }) {
   const [view, setView] = useState(<h2>Please wait...</h2>);
-
+  const { setUserId } = useContext(DataContext);
   useEffect(() => {
     axios
       .get("http://localhost:3003/login-check?role=" + role, authConfig())
       .then((res) => {
         if ("ok" === res.data.msg) {
+          setUserId(res.data.id)
+          console.log(role)
           setView(children);
         } else if (res.data.status === 2) {
           setView(<h2>Unauthorize...</h2>);

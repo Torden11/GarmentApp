@@ -74,7 +74,7 @@ app.use(doAuth);
 app.get("/login-check", (req, res) => {
     const sql = `
          SELECT
-         name, role
+         id, name, role
          FROM users
          WHERE session = ?
         `;
@@ -89,11 +89,11 @@ app.get("/login-check", (req, res) => {
                 if (result[0].role !== 10) {
                     res.send({ msg: 'error', status: 2 }); // not an admin
                 } else {
-                    res.send({ msg: 'ok', status: 3 }); // is admin
+                    res.send({ msg: 'ok', status: 3, id: result[0].id }); // is admin
                 }
             } else {
                 console.log('useris')
-                res.send({ msg: 'ok', status: 4 }); // is user
+                res.send({ msg: 'ok', status: 4, id: result[0].id }); // is user
             }
         }
     });
@@ -142,12 +142,12 @@ app.post("/server/garments", (req, res) => {
     });
 });
 
-app.post("/server/orders/:id", (req, res) => {
+app.post("/orders/", (req, res) => {
     const sql = `
-    INSERT INTO orders (garment_id)
-    VALUES (?)
+    INSERT INTO orders (order_confirmed, order_sum, garment_id, user_id)
+    VALUES (?, ?, ?, ?)
     `;
-    con.query(sql, [req.params.id], (err, result) => {
+    con.query(sql, [req.body.order_confirmed, req.body.order_sum, req.body.garment_id, req.body.user_id], (err, result) => {
         if (err) throw err;
         res.send({ msg: 'OK', text: 'Thanks for the order. It will be confirmed soon', type: 'info' });
     });
@@ -178,19 +178,19 @@ app.get("/home/garments", (req, res) => {
     });
 });
 
-// app.get("/server/garments/noorders", (req, res) => {
-//     const sql = `
-//     SELECT g.*, g.id AS cid,
-//     FROM garments AS g
-//     INNER JOIN orders AS o
-//     ON o.garment_id = g.id
-//     ORDER BY g.type
-//     `;
-//     con.query(sql, (err, result) => {
-//         if (err) throw err;
-//         res.send(result);
-//     });
-// });
+app.get("/garments/noorders", (req, res) => {
+    const sql = `
+    SELECT g.*, g.id AS cid
+    FROM garments AS g
+    INNER JOIN orders AS o
+    ON o.garment_id = g.id
+    ORDER BY g.type
+    `;
+    con.query(sql, (err, result) => {
+        if (err) throw err;
+        res.send(result);
+    });
+});
 
 
 //DELETE

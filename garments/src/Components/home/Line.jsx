@@ -1,27 +1,22 @@
-import { useContext } from 'react';
-import Home from '../../Contexts/Home';
-
-// import { useState } from "react";
+import { useContext } from "react";
+import Home from "../../Contexts/Home";
+import DataContext from "../../Contexts/DataContext";
 
 function Line({ garment }) {
   const { setOrder } = useContext(Home);
+  const { userId } = useContext(DataContext);
 
-  // const [rate, setRate] = useState(5);
-  // const [post, setPost] = useState('');
-
-  // const doRating = () => {
-  //     setRateData({
-  //         id: garment[1][0].id,
-  //         rate
-  //     });
-  //     setRate(5);
-  // }
+  //	order_confirmed: 0;	order_sum: garmet.price	garment_id: garment.id	user_id:1
 
   const add = () => {
-      setOrder({
-          garment_id: garment.id
-      });
-      };
+    // console.log(userId)
+    setOrder({
+      order_confirmed: 0,
+      order_sum: garment.price,
+      garment_id: garment.id,
+      user_id: userId,
+    });
+  };
 
   return (
     <li className="list-group-item">
@@ -41,35 +36,11 @@ function Line({ garment }) {
           </div>
           <div className="home__content__info">Size: {garment.size}</div>
           <div className="home__content__price">Price: {garment.price} Eur</div>
-          
-          {/* <div className="home__content__info">
-                    <h2>Movie Rating: {garment[1][0].rating ?? 'no rating'}</h2>
-                        <select value={rate} onChange={e => setRate(e.target.value)}>
-                            {
-                                [...Array(10)].map((_, i) => <option key={i + 1} value={i + 1}>{i + 1}</option>)
-                            }
-                        </select>
-                    </div> */}
-          {/* <div className="home__buttons">
-                        <button onClick={doRating} type="button" className="btn btn-outline-success">Rate</button>
-                    </div> */}
         </div>
-        <button onClick={add}  type="button" className="btn btn-outline-success">Buy</button>
+        <button onClick={add} type="button" className="btn btn-outline-success">
+          Add to Cart
+        </button>
       </div>
-      {/* <div className="comments">
-
-                <ul className="list-group">
-                    {
-                        garment[1]?.map(c => c.cid !== null ? <li key={c.cid} className="list-group-item"><p>{c.post}</p></li> : null)
-                    }
-                </ul>
-
-                <div className="mb-3">
-                    <label className="form-label">Add comment</label>
-                    <textarea className="form-control" value={post} onChange={e => setPost(e.target.value)}></textarea>
-                </div>
-                <button onClick={add} type="button" className="btn btn-outline-success">Add</button>
-            </div> */}
     </li>
   );
 }

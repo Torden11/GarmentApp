@@ -38,8 +38,8 @@ function Main() {
         useEffect(() => {
             if (null === order) {
                 return;
-            }console.log(order)
-            axios.post('http://localhost:3003/server/orders' + order.garment_id, order, authConfig())
+            }
+            axios.post('http://localhost:3003/orders', order, authConfig())
                .then(res => {
                 makeMsg(res.data.text, res.data.type);
             })

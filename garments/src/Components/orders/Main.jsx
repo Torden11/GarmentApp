@@ -26,7 +26,7 @@ function Main() {
 
     // READ for list
     useEffect(() => {
-        axios.get('http://localhost:3003/server/garments/noorders', authConfig())
+        axios.get('http://localhost:3003/garments/noorders', authConfig())
             .then(res => {
                 setGarments(reList(res.data));
             })
