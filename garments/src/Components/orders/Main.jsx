@@ -10,25 +10,25 @@ function Main() {
     const [lastUpdate, setLastUpdate] = useState(Date.now());
     const [garments, setGarments] = useState(null);
     const [order, setOrder] = useState(null);
-    const { makeMsg } = useContext(DataContext);
+    const { makeMsg, userId } = useContext(DataContext);
 
-    const reList = data => {
-        const d = new Map();
-        data.forEach(line => {
-            if (d.has(line.title)) {
-                d.set(line.title, [...d.get(line.title), line]);
-            } else {
-                d.set(line.title, [line]);
-            }
-        });
-        return [...d];
-    }
+    // const reList = data => {
+    //     const d = new Map();
+    //     data.forEach(line => {
+    //         if (d.has(line.title)) {
+    //             d.set(line.title, [...d.get(line.title), line]);
+    //         } else {
+    //             d.set(line.title, [line]);
+    //         }
+    //     });
+    //     return [...d];
+    // }
 
     // READ for list
     useEffect(() => {
-        axios.get('http://localhost:3003/garments/noorders', authConfig())
+        axios.get('http://localhost:3003/garments/noorders/'+ userId, authConfig())
             .then(res => {
-                setGarments(reList(res.data));
+                setGarments(res.data);
             })
     }, [lastUpdate]);
 

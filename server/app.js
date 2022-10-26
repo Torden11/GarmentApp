@@ -83,7 +83,6 @@ app.get("/login-check", (req, res) => {
         if (!result.length) {
             res.send({ msg: 'error', status: 1 }); // user not logged
         } else {
-            console.log(req.query.role)
             if ('admin' === req.query.role) {
                
                 if (result[0].role !== 10) {
@@ -92,7 +91,6 @@ app.get("/login-check", (req, res) => {
                     res.send({ msg: 'ok', status: 3, id: result[0].id }); // is admin
                 }
             } else {
-                console.log('useris')
                 res.send({ msg: 'ok', status: 4, id: result[0].id }); // is user
             }
         }
@@ -178,15 +176,17 @@ app.get("/home/garments", (req, res) => {
     });
 });
 
-app.get("/garments/noorders", (req, res) => {
+app.get("/garments/noorders/:id", (req, res) => {
     const sql = `
-    SELECT g.*, g.id AS cid
+    SELECT g.*, o.id AS cid, u.id AS userID
     FROM garments AS g
     INNER JOIN orders AS o
     ON o.garment_id = g.id
-    ORDER BY g.type
+    INNER JOIN users AS u
+    ON o.user_id = u.id
+    WHERE u.id = ?
     `;
-    con.query(sql, (err, result) => {
+    con.query(sql, [req.params.id], (err, result) => {
         if (err) throw err;
         res.send(result);
     });

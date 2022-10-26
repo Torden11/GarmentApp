@@ -123,7 +123,6 @@ function ShowNav({ roleChange }) {
     axios
       .get("http://localhost:3003/login-check?role=admin", authConfig())
       .then((res) => {
-        console.log(res.data.status)
         setStatus(res.data.status);
       });
   }, [roleChange]);
@@ -139,7 +138,6 @@ function RequireAuth({ children, role }) {
       .then((res) => {
         if ("ok" === res.data.msg) {
           setUserId(res.data.id)
-          console.log(role)
           setView(children);
         } else if (res.data.status === 2) {
           setView(<h2>Unauthorize...</h2>);
