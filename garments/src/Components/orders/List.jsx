@@ -7,19 +7,19 @@ function List() {
 
     const { garments } = useContext(Order);
     const [orderSum, setOrderSum] = useState({ sum: null });
-    console.log(garments)
+    
     
 
     useEffect(() => {
         if (null === garments) {
             return;
         }
-        setOrderSum(o => ({ ...o, sum: garments.reduce((a, b) => (a.price + b.price)) }));
+        setOrderSum(o => ({ ...o, sum: garments.reduce((a, b) => (a + b.price), 0) }));
     }, [garments]);
 
     return (
         <div className="card m-4">
-            <h5 className="card-header">Orders List ({orderSum.sum})</h5>
+            <h5 className="card-header">Orders List (Total {orderSum.sum} EUR)</h5>
             <div className="card-body">
                 <ul className="list-group">
                     {
