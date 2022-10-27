@@ -37,9 +37,11 @@ function Line({ garment }) {
           <div className="home__content__info">Size: {garment.size}</div>
           <div className="home__content__price">Price: {garment.price} Eur</div>
         </div>
+      <div className="home__buttons">
         <button onClick={add} type="button" className="btn btn-outline-success">
           Add to Cart
         </button>
+      </div>
       </div>
     </li>
   );

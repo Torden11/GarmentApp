@@ -176,9 +176,22 @@ app.get("/home/garments", (req, res) => {
     });
 });
 
+app.get("/garments/noorders", (req, res) => {
+    const sql = `
+    SELECT g.*, o.id AS cid, o.order_confirmed 
+    FROM garments AS g
+    INNER JOIN orders AS o
+    ON o.garment_id = g.id
+    `;
+    con.query(sql, (err, result) => {
+        if (err) throw err;
+        res.send(result);
+    });
+});
+
 app.get("/garments/noorders/:id", (req, res) => {
     const sql = `
-    SELECT g.*, o.id AS cid, u.id AS userID
+    SELECT g.*, o.id AS cid, u.id AS userID, o.order_confirmed
     FROM garments AS g
     INNER JOIN orders AS o
     ON o.garment_id = g.id
@@ -205,33 +218,49 @@ app.delete("/server/garments/:id", (req, res) => {
     });
 });
 
-app.delete("/server/comments/:id", (req, res) => {
+app.delete("/server/orders/:id", (req, res) => {
     const sql = `
-    DELETE FROM comments
+    DELETE FROM orders
     WHERE id = ?
     `;
     con.query(sql, [req.params.id], (err, result) => {
         if (err) throw err;
-        res.send({ msg: 'OK', text: 'Unappropriate comment has been deleted.', type: 'info' });
+        res.send({ msg: 'OK', text: 'An order has been deleted.', type: 'info' });
     });
 });
 
 
 //EDIT
-app.put("/home/garments/:id", (req, res) => {
-    const sql = `
-    UPDATE garments
-    SET 
-    rating_sum = rating_sum + ?, 
-    rating_count = rating_count + 1, 
-    rating = rating_sum / rating_count
+
+// ORDER APPROVE by admin
+
+app.put("/server/orders/:id", (req, res) => {
+  const sql = `
+    UPDATE orders
+    SET order_confirmed = ?
     WHERE id = ?
     `;
-    con.query(sql, [req.body.rate, req.params.id], (err, result) => {
-        if (err) throw err;
-        res.send({ msg: 'OK', text: 'Thanks for your vote!', type: 'info' });
-    });
+  con.query(sql, [req.body.order_confirmed, req.params.id], (err, result) => {
+    if (err) throw err;
+    res.send({ msg: 'OK', text: 'The order has been confirmed', type: 'info' });
+  });
 });
+// app.put("/home/garments/:id", (req, res) => {
+//     const sql = `
+//     UPDATE garments
+//     SET 
+//     rating_sum = rating_sum + ?, 
+//     rating_count = rating_count + 1, 
+//     rating = rating_sum / rating_count
+//     WHERE id = ?
+//     `;
+//     con.query(sql, [req.body.rate, req.params.id], (err, result) => {
+//         if (err) throw err;
+//         res.send({ msg: 'OK', text: 'Thanks for your vote!', type: 'info' });
+//     });
+// });
+
+
 app.put("/server/garments/:id", (req, res) => {
     let sql;
     let r;

@@ -8,6 +8,7 @@ import {
 import Nav from "./Components/Nav"
 import Home from "./Components/home/Main";
 import MainOrders from "./Components/orders/Main";
+import MainAdmin from "./Components/ordersadmin/MainAdmin";
 import Main from "./Components/garments/Main";
 import RegisterPage from "./Components/register/Main";
 import LoginPage from "./Components/login/LoginPage";
@@ -95,7 +96,7 @@ function App() {
             path="/orders"
             element={
               <RequireAuth role="admin">
-                <MainOrders />
+                <MainAdmin />
               </RequireAuth>
             }
           ></Route>
@@ -145,7 +146,7 @@ function RequireAuth({ children, role }) {
           setView(<Navigate to="/login" replace />);
         }
       });
-  }, [children, role]);
+  }, [children, role, setUserId]);
 
   return view;
 }
