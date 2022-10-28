@@ -71,7 +71,7 @@ function Main() {
         }}>
             <div className="container">
                 <div className="row">
-                    <div className="col-4 col-md-12">
+                    <div className="col-8 col-md-12">
                         <Create />
                     </div>
                     <div className="col-8 col-md-12">

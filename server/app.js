@@ -126,7 +126,7 @@ app.post("/register", (req, res) => {
     });
 });
 
-///////////////////END////////////////////
+///////////////////LOGIN END////////////////////
 
 //CREATE
 app.post("/server/garments", (req, res) => {
@@ -232,7 +232,7 @@ app.delete("/server/orders/:id", (req, res) => {
 
 //EDIT
 
-// ORDER APPROVE by admin
+// ORDER APPROVAL by admin
 
 app.put("/server/orders/:id", (req, res) => {
   const sql = `
@@ -245,21 +245,8 @@ app.put("/server/orders/:id", (req, res) => {
     res.send({ msg: 'OK', text: 'The order has been confirmed', type: 'info' });
   });
 });
-// app.put("/home/garments/:id", (req, res) => {
-//     const sql = `
-//     UPDATE garments
-//     SET 
-//     rating_sum = rating_sum + ?, 
-//     rating_count = rating_count + 1, 
-//     rating = rating_sum / rating_count
-//     WHERE id = ?
-//     `;
-//     con.query(sql, [req.body.rate, req.params.id], (err, result) => {
-//         if (err) throw err;
-//         res.send({ msg: 'OK', text: 'Thanks for your vote!', type: 'info' });
-//     });
-// });
 
+//GARMENT EDIT
 
 app.put("/server/garments/:id", (req, res) => {
     let sql;

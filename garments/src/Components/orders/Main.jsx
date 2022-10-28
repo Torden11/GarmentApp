@@ -12,17 +12,6 @@ function Main() {
     const [order, setOrder] = useState(null);
     const { makeMsg, userId } = useContext(DataContext);
 
-    // const reList = data => {
-    //     const d = new Map();
-    //     data.forEach(line => {
-    //         if (d.has(line.title)) {
-    //             d.set(line.title, [...d.get(line.title), line]);
-    //         } else {
-    //             d.set(line.title, [line]);
-    //         }
-    //     });
-    //     return [...d];
-    // }
 
     // READ for list
     useEffect(() => {

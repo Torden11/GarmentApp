@@ -1,19 +1,10 @@
-// import React from "react";
-// import { useContext } from "react";
-// import Order from "../../Contexts/Order";
-
 function Line({ garment }) {
-//   const { setOrder } = useContext(Order);
-
-//   const remove = (id) => {
-//     setOrder({ id });
-//   };
-
+  
   return (
     <li className="list-group-item">
       <div className="home">
         <div className="home__content">
-          <div className="home__content__info">
+          <div className="home__content__title">
             <h1>{garment.type}</h1>
             {garment.image ? (
               <div className="img-bin">
@@ -26,25 +17,20 @@ function Line({ garment }) {
           </div>
           <div className="home__content__info">Size: {garment.size}</div>
           <div className="home__content__price">{garment.price} Eur</div>
+          <div className="home__content__info">
+            {garment.order_confirmed === 0 ? (
+              <div>Unaproved</div>
+            ) : (
+              <div style={{ color: "green" }}>Approved</div>
+            )}
+          </div>
         </div>
-        <div className="home__content__info">
-                {garment.order_confirmed === 0 ?(
-                  <div>Unaproved</div>
-                ) : (
-                  <div style={{ color: "green" }}>Approved</div>
-                )}
-              </div>
       </div>
       <div className="home__buttons">
-        <button
-        //   onClick={() => remove(garment.cid)}
-          type="button"
-          className="btn btn-outline-danger"
-        >
+        <button type="button" className="btn btn-outline-success">
           Checkout
         </button>
       </div>
-      
     </li>
   );
 }

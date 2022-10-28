@@ -15,7 +15,7 @@
     &__info {
       font-size: 20px;
       letter-spacing: 1px;
-      margin-right: 50px;
+      margin-right: 30px;
     }
   }
   &__buttons {
@@ -33,7 +33,7 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  flex-direction: wrap;
+  flex-wrap: wrap;
 
   &__content {
     display: flex;
@@ -46,12 +46,12 @@
     &__info {
       font-size: 20px;
       letter-spacing: 1px;
-      margin-right: 10px;
+      margin-right: 25px;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-wrap: wrap;
-      min-width: 300px;
+      min-width: 250px;
       h2 {
         font-size: 20px;
         color: cornflowerblue;
