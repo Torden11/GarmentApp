@@ -128,7 +128,7 @@ app.post("/register", (req, res) => {
 
 ///////////////////LOGIN END////////////////////
 
-//CREATE
+//CREATE garments for admin
 app.post("/server/garments", (req, res) => {
     const sql = `
     INSERT INTO garments (type, color, size, price, image)
@@ -140,6 +140,7 @@ app.post("/server/garments", (req, res) => {
     });
 });
 
+//CREATE order for user
 app.post("/orders/", (req, res) => {
     const sql = `
     INSERT INTO orders (order_confirmed, order_sum, garment_id, user_id)
@@ -151,7 +152,7 @@ app.post("/orders/", (req, res) => {
     });
 });
 
-// READ (all)
+// GET GARMENTS for admin
 app.get("/server/garments", (req, res) => {
     const sql = `
     SELECT *
@@ -164,6 +165,7 @@ app.get("/server/garments", (req, res) => {
     });
 });
 
+//GET garments for admin and users at home
 app.get("/home/garments", (req, res) => {
     const sql = `
     SELECT *
@@ -176,6 +178,7 @@ app.get("/home/garments", (req, res) => {
     });
 });
 
+//GET garments for admin orders
 app.get("/garments/noorders", (req, res) => {
     const sql = `
     SELECT g.*, o.id AS cid, o.order_confirmed 
@@ -189,6 +192,7 @@ app.get("/garments/noorders", (req, res) => {
     });
 });
 
+//GET garments for user orders
 app.get("/garments/noorders/:id", (req, res) => {
     const sql = `
     SELECT g.*, o.id AS cid, u.id AS userID, o.order_confirmed
@@ -206,7 +210,7 @@ app.get("/garments/noorders/:id", (req, res) => {
 });
 
 
-//DELETE
+//DELETE garments by admin
 app.delete("/server/garments/:id", (req, res) => {
     const sql = `
     DELETE FROM garments
@@ -218,6 +222,7 @@ app.delete("/server/garments/:id", (req, res) => {
     });
 });
 
+//DELETE orders by admin
 app.delete("/server/orders/:id", (req, res) => {
     const sql = `
     DELETE FROM orders
@@ -246,7 +251,7 @@ app.put("/server/orders/:id", (req, res) => {
   });
 });
 
-//GARMENT EDIT
+//GARMENT EDIT by admin
 
 app.put("/server/garments/:id", (req, res) => {
     let sql;
@@ -282,132 +287,3 @@ app.put("/server/garments/:id", (req, res) => {
 app.listen(port, () => {
     console.log(`Rubai yra renkami per ${port} portą!`)
 });
-
-
-
-
-
-
-// // READ
-// // SELECT column1, column2, ...
-// // FROM table_name;
-
-// // app.get("/trees/:tipas", (req, res) => {
-
-// //     // console.log(req.query.sort);
-
-// //     const sql = `
-// //     SELECT id, type, title, height
-// //     FROM trees
-// //     WHERE type = ? OR type = ?
-// //     `;
-// //     con.query(sql, [req.params.tipas, req.query.sort], (err, result) => {
-// //         if (err) throw err;
-// //         res.send(result);
-// //     });
-// // });
-
-// // INNER JOIN
-// // SELECT column_name(s)
-// // FROM table1
-// // INNER JOIN table2
-// // ON table1.column_name = table2.column_name;
-// app.get("/get-it/inner-join", (req, res) => {
-//     const sql = `
-//     SELECT c.id, p.id AS pid, name, phone
-//     FROM clients AS c
-//     INNER JOIN phones AS p
-//     ON c.id = p.client_id
-//     `;
-//     con.query(sql, (err, result) => {
-//         if (err) throw err;
-//         res.send(result);
-//     });
-// });
-
-// app.get("/get-it/left-join", (req, res) => {
-//     const sql = `
-//     SELECT c.id, p.id AS pid, name, phone
-//     FROM clients AS c
-//     LEFT JOIN phones AS p
-//     ON c.id = p.client_id
-//     `;
-//     con.query(sql, (err, result) => {
-//         if (err) throw err;
-//         res.send(result);
-//     });
-// });
-
-// app.get("/get-it/right-join", (req, res) => {
-//     const sql = `
-//     SELECT c.id, p.id AS pid, name, phone
-//     FROM clients AS c
-//     RIGHT JOIN phones AS p
-//     ON c.id = p.client_id
-//     `;
-//     con.query(sql, (err, result) => {
-//         if (err) throw err;
-//         res.send(result);
-//     });
-// });
-
-
-
-
-
-// // READ (all)
-// app.get("/trees", (req, res) => {
-//     const sql = `
-//     SELECT id, type, title, height
-//     FROM trees
-//     `;
-//     con.query(sql, (err, result) => {
-//         if (err) throw err;
-//         res.send(result);
-//     });
-// });
-
-// //CREATE
-// // INSERT INTO table_name (column1, column2, column3, ...)
-// // VALUES (value1, value2, value3, ...);
-// app.post("/trees", (req, res) => {
-//     const sql = `
-//     INSERT INTO trees (title, height, type)
-//     VALUES (?, ?, ?)
-//     `;
-//     con.query(sql, [req.body.title, req.body.height, req.body.type], (err, result) => {
-//         if (err) throw err;
-//         res.send(result);
-//     });
-// });
-
-
-// //DELETE
-// // DELETE FROM table_name WHERE condition;
-// app.delete("/trees/:id", (req, res) => {
-//     const sql = `
-//     DELETE FROM trees
-//     WHERE id = ?
-//     `;
-//     con.query(sql, [req.params.id], (err, result) => {
-//         if (err) throw err;
-//         res.send(result);
-//     });
-// });
-
-
-// //EDIT
-// // UPDATE table_name
-// // SET column1 = value1, column2 = value2, ...
-// // WHERE condition;
-// app.put("/trees/:id", (req, res) => {
-//     const sql = `
-//     UPDATE trees
-//     SET title = ?, height = ?, type = ?
-//     WHERE id = ?
-//     `;
-//     con.query(sql, [req.body.title, req.body.height, req.body.type, req.params.id], (err, result) => {
-//         if (err) throw err;
-//         res.send(result);
-//     });
-// });

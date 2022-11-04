@@ -12,7 +12,7 @@ function Main() {
   const [deleteData, setDeleteData] = useState(null);
   const { makeMsg } = useContext(DataContext);
 
-  console.log(order)
+
 
   // READ for list
   useEffect(() => {
